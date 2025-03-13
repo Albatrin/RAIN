@@ -1,14 +1,19 @@
 <div class="container">
     <h3>Objavi novico</h3>
-    <form action="/objavi-novico" method="POST">
-        <div class="form-group">
-            <label for="naslov">Naslov:</label>
-            <input type="text" id="naslov" name="naslov" class="form-control" required>
+    <form action="/articles/store" method="POST">
+        <div class="form-group mb-3">
+            <label for="title">Naslov:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
         </div>
 
-        <div class="form-group">
-            <label for="vsebina">Vsebina:</label>
-            <textarea id="vsebina" name="vsebina" class="form-control" rows="10" required></textarea>
+        <div class="form-group mb-3">
+            <label for="abstract">Povzetek:</label>
+            <textarea id="abstract" name="abstract" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="text">Vsebina:</label> <!-- Spremenjeno iz content v text -->
+            <textarea id="text" name="text" class="form-control" rows="10" required></textarea>
         </div>
 
         <div class="form-group">

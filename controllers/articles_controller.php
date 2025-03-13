@@ -37,33 +37,33 @@ class articles_controller
         require_once('views/articles/show.php');
     }
 
-    public function create(){
-        require_once('views/articles/create.php');
+    public function store()
+{
+    if (!isset($_SESSION["USER_ID"])) {
+        return call('pages', 'error');
     }
 
-    public function store() {
-        // Check if user is logged in
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
-            return call('pages', 'error');
-        }
+    if (!isset($_POST['title']) || !isset($_POST['text']) || !isset($_POST['abstract'])) {
+        return call('pages', 'error');
+    }
 
-        // Validate input
-        if (!isset($_POST['title']) || !isset($_POST['abstract']) || !isset($_POST['text'])) {
-            return call('pages', 'error');
-        }
+    $db = Db::getInstance();
+    $title = mysqli_real_escape_string($db, $_POST['title']);
+    $abstract = mysqli_real_escape_string($db, $_POST['abstract']);
+    $text = mysqli_real_escape_string($db, $_POST['text']); // Spremenjeno iz content v text
+    $user_id = $_SESSION["USER_ID"];
 
-        // Get data from form
-        $title = $_POST['title'];
-        $abstract = $_POST['abstract'];
-        $text = $_POST['text'];
-        $user_id = $_SESSION['user_id'];
+    $query = "INSERT INTO articles (title, abstract, text, user_id) VALUES ('$title', '$abstract', '$text', '$user_id')";
 
-        // Create new article
-        if (Article::insert($title, $abstract, $text, $user_id)) {
-            header('Location: ?controller=articles&action=index');
-        } else {
-            return call('pages', 'error');
-        }
+    if ($db->query($query)) {
+        header('Location: ?controller=articles&action=index'); // Popravljena pot
+    } else {
+        return call('pages', 'error');
+    }
+}
+
+
+    public function create(){
+        require_once('views/articles/create.php');
     }
 }
