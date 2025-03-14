@@ -5,9 +5,7 @@
         show: izpiše posamezno novico
         
     TODO:        
-        edit: izpiše vmesnik za urejanje novice
-        update: posodobi novico v bazi
-        delete: izbriše novico iz baze
+       
 */
 
 class articles_controller
@@ -118,10 +116,6 @@ class articles_controller
        }
     }
 
-    public function create(){
-        require_once('views/articles/create.php');
-    }
-
     public function delete()
     {
         if (!isset($_SESSION["USER_ID"]) || !isset($_GET['id'])) {
@@ -139,5 +133,9 @@ class articles_controller
         } else {
             return call('pages', 'error');
         }
+    }
+
+    public function create(){
+        require_once('views/articles/create.php');
     }
 }
