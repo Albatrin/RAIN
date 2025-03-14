@@ -19,6 +19,7 @@
             <?php
             if(isset($_SESSION["USER_ID"])){
                 ?>
+                <li class="nav-item"><a href="/articles/list" class="nav-link">Moje novice</a></li>
                 <li class="nav-item"><a href="/articles/create" class="nav-link">Objavi novico</a></li>
                 <li class="nav-item"><a href="/users/edit" class="nav-link">Uredi profil</a></li>
                 <li class="nav-item"><a href="/auth/logout" class="nav-link">Odjava</a></li>
@@ -33,6 +34,8 @@
         </ul>
         </header>
     </div>
+
+    
 
     <!-- tukaj se bo vključevala koda pogledov, ki jih bodo nalagali kontrolerji -->
     <!-- klic akcije iz routes bo na tem mestu zgeneriral html kodo, ki bo zalepnjena v našo predlogo -->
