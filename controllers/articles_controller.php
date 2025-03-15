@@ -7,6 +7,8 @@
     TODO:        
        
 */
+require_once 'models/comments.php'; // Add this line
+
 
 class articles_controller
 {
@@ -29,6 +31,7 @@ class articles_controller
         }
         //drugače najdemo oglas in ga prikažemo
         $article = Article::find($_GET['id']);
+        $comments = Comment::find_by_article($article->id); 
         require_once('views/articles/show.php');
     }
 
