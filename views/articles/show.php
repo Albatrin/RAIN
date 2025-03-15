@@ -8,17 +8,12 @@
         <a href="/"><button>Nazaj</button></a>
     </div>
     
-    <!-- Dodamo sekcijo za komentarje -->
     <div class="comments-section mt-4">
         <h3>Komentarji</h3>
         
         <?php
-        // Vključimo model za komentarje, če še ni vključen
         require_once('models/comments.php');
-        
-        // Pridobimo komentarje za ta članek
-        $comments = Comment::find_by_article($article->id);
-        
+                $comments = Comment::find_by_article($article->id);
         if (!empty($comments)):
         ?>
             <div class="comments-list">
@@ -38,11 +33,9 @@
             <p>Ta članek še nima komentarjev.</p>
         <?php endif; ?>
         
-        <!-- Obrazec za komentiranje -->
         <?php if(isset($_SESSION["USER_ID"])): ?>
             <div class="comment-form mt-4">
                 <h4>Dodaj komentar</h4>
-                <!-- Obrazec za dodajanje komentarja -->
                 <form action="/comments/addComment" method="POST">
                     <input type="hidden" name="article_id" value="<?php echo $article->id; ?>">
                     <div class="form-group mb-3">

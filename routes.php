@@ -36,6 +36,7 @@ if(isset($_SESSION["USER_ID"])){
   $controllers['auth'] = array_merge($controllers['auth'], ['logout']);
   $controllers['articles'] = array_merge($controllers['articles'], ['create'], ['store'], ['list'], ['update'], ['edit'], ['delete']);
   $controllers['comments'] = array_merge($controllers['comments'], ['addComment']);
+  $controllers['profile'] = array_merge($controllers['showProfile']);
 }
 
 // Preverimo, če zahteva kliče controller in akcijo iz zgornjega seznama
