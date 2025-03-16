@@ -87,11 +87,11 @@ class User
         } 
     }
 
-    public static function countArticles(){
-        $db=Db::getInstance();
-        $query="SELECT COUNT(*) AS count FROM articles WHERE user_id=$user_id";
+    public static function countArticles($user_id) {
+        $db = Db::getInstance();
+        $user_id = mysqli_real_escape_string($db, $user_id);
+        $query = "SELECT COUNT(*) AS count FROM articles WHERE user_id=$user_id";
         $result = $db->query($query);
-        $row = $result->fetch_assoc();
         $row = $result->fetch_assoc();
         if (isset($row['count'])) {
             return $row['count']; 
@@ -99,12 +99,12 @@ class User
             return 0; 
         }
     }
-
-    public static function countComments(){
-        $db=Db::getInstance();
-        $query="SELECT COUNT(*) AS count FROM comments WHERE user_id=$user_id";
+    
+    public static function countComments($user_id) {
+        $db = Db::getInstance();
+        $user_id = mysqli_real_escape_string($db, $user_id);
+        $query = "SELECT COUNT(*) AS count FROM comments WHERE user_id=$user_id";
         $result = $db->query($query);
-        $row = $result->fetch_assoc();
         $row = $result->fetch_assoc();
         if (isset($row['count'])) {
             return $row['count']; 

@@ -20,7 +20,11 @@
                 <?php foreach($comments as $comment): ?>
                     <div class="comment card mb-3">
                         <div class="card-header d-flex justify-content-between">
-                            <span class="fw-bold"><?php echo htmlspecialchars($comment->username); ?></span>
+                            <span class="fw-bold">
+                            <a href="/profile/show?id=<?php echo $comment->user_id; ?>">
+                            <?php echo htmlspecialchars($comment->username); ?>
+                            </a>
+                        </span>
                             <span class="text-muted"><?php echo date_format(date_create($comment->created_at), 'd. m. Y \ob H:i:s'); ?></span>
                         </div>
                         <div class="card-body">
