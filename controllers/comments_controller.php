@@ -19,7 +19,6 @@ class comments_controller {
                 exit();
             }
 
-            // Call the model method
             if (Comment::create($content, $user_id, $article_id)) {
                 $_SESSION['success'] = "Komentar uspešno dodan!";
             } else {
