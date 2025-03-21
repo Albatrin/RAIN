@@ -35,7 +35,7 @@ class articles_controller
         require_once('views/articles/show.php');
     }
 
-    public function store()
+    public function store() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -60,7 +60,7 @@ class articles_controller
         }
     }
 
-    public function list()
+    public function list() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -78,7 +78,7 @@ class articles_controller
         require_once('views/articles/list.php');
     }
 
-    public function edit()
+    public function edit() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -98,7 +98,7 @@ class articles_controller
     }
     
 
-    public function update(){
+    public function update(){ //UREJANJE
 
         if (!isset($_SESSION["USER_ID"]) || !isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['abstract']) || !isset($_POST['content'])) {
             return call('pages', 'error');
@@ -119,7 +119,7 @@ class articles_controller
        }
     }
 
-    public function delete()
+    public function delete() //Izbirs
     {
         if (!isset($_SESSION["USER_ID"]) || !isset($_GET['id'])) {
             return call('pages', 'error');

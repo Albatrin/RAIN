@@ -133,15 +133,13 @@ class users_controller
         die();
     }
 
-    // Update password
     $db = Db::getInstance();
-    $new_password = password_hash($_POST["new_password"], PASSWORD_DEFAULT);
     $id = $_SESSION["USER_ID"];
     
     $query = "UPDATE users SET password = '$new_password' WHERE id = $id LIMIT 1";
     
     if($db->query($query)){
-        header("Location: /users/password?success=1"); // Redirect with success flag
+        header("Location: /users/password?success=1"); 
     } else {
         header("Location: /users/password?error=4");
     }

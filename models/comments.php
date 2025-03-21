@@ -35,7 +35,7 @@ class Comment {
                     $row['id'], 
                     $row['content'], 
                     $row['user_id'], 
-                    $row['username'],  // Corrected argument order
+                    $row['username'],  
                     $row['article_id'], 
                     $row['created_at']
                 );

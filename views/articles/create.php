@@ -12,7 +12,7 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="text">Vsebina:</label> <!-- Spremenjeno iz content v text -->
+            <label for="text">Vsebina:</label> 
             <textarea id="text" name="text" class="form-control" rows="10" required></textarea>
         </div>
 
