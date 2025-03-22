@@ -26,7 +26,7 @@ class Article
         $this->abstract = $abstract;
         $this->text = $text;
         $this->date = $date;
-        $this->user = User::find($user_id); //naložimo podatke o uporabniku
+        $this->user = User::find($user_id); 
     }
 
     // Metoda, ki iz baze vrne vse novice
@@ -56,5 +56,6 @@ class Article
         return null;
     }
 
+    
    
 }

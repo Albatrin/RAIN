@@ -23,7 +23,8 @@
                 <li class="nav-item"><a href="/articles/create" class="nav-link">Objavi novico</a></li>
                 <li class="nav-item"><a href="/users/edit" class="nav-link">Uredi profil</a></li>
                 <li class="nav-item"><a href="/auth/logout" class="nav-link">Odjava</a></li>
-                <?php
+                <li class="nav-item"><a href="/users/password" class="nav-link">Spremeni geslo</a></li>
+                <li class="nav-item"><a href="/profile/showProfile" class="nav-link">Profil</a></li>                <?php
             } else{
                 ?>
                 <li class="nav-item"><a href="/auth/login" class="nav-link">Prijava</a></li>

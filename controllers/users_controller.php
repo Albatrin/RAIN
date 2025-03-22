@@ -23,23 +23,20 @@ class users_controller
     }
     
     function store(){
-        //Preveri če so vsi podatki izpolnjeni
         if(empty($_POST["username"]) || empty($_POST["email"]) || empty($_POST["password"])){
             header("Location: /users/create?error=1"); 
         }
-        //Preveri če se gesli ujemata
         else if($_POST["password"] != $_POST["repeat_password"]){
             header("Location: /users/create?error=2"); 
         }
-        //Preveri ali uporabniško ime obstaja
+        // ali uporabniško ime obstaja
         else if(User::is_available($_POST["username"])){
             header("Location: /users/create?error=3"); 
         }
-        //Podatki so pravilno izpolnjeni, registriraj uporabnika
         else if(User::create($_POST["username"], $_POST["email"], $_POST["password"])){
             header("Location: /auth/login");
         }
-        //Prišlo je do napake pri registraciji
+       
         else{
             header("Location: /users/create?error=4"); 
         }
@@ -87,4 +84,65 @@ class users_controller
         }
         die();
     }
+
+    function password(){
+        if (!isset($_SESSION["USER_ID"])) {
+           return call('pages', 'error'); 
+       }
+   
+       $error = "";
+       $success = "";
+       
+       if(isset($_GET["error"])){
+           switch($_GET["error"]){
+               case 1: $error = "Izpolnite vse podatke"; break;
+               case 2: $error = "Staro geslo ni pravilno."; break;
+               case 3: $error = "Novi gesli se ne ujemata."; break;
+               case 4: $error = "Prišlo je do napake pri posodobitvi gesla."; break;
+               default: $error = "Prišlo je do napake.";
+           }
+       }
+       
+       if(isset($_GET["success"])){
+           $success = "Geslo je bilo uspešno posodobljeno!";
+       }
+   
+       require_once('views/users/password.php');
+   }
+
+   function update_password() {
+    if(!isset($_SESSION["USER_ID"])){
+        header("Location: /pages/error");
+        die();
+    }
+
+    if(empty($_POST["old_password"]) || empty($_POST["new_password"]) || empty($_POST["confirm_password"])){
+        header("Location: /users/password?error=1");
+        die();
+    }
+
+    $user = User::find($_SESSION["USER_ID"]);
+    
+    if(!password_verify($_POST["old_password"], $user->password)){
+        header("Location: /users/password?error=2");
+        die();
+    }
+
+    if($_POST["new_password"] !== $_POST["confirm_password"]){
+        header("Location: /users/password?error=3");
+        die();
+    }
+
+    $db = Db::getInstance();
+    $id = $_SESSION["USER_ID"];
+    
+    $query = "UPDATE users SET password = '$new_password' WHERE id = $id LIMIT 1";
+    
+    if($db->query($query)){
+        header("Location: /users/password?success=1"); 
+    } else {
+        header("Location: /users/password?error=4");
+    }
+    die();
+}
 }

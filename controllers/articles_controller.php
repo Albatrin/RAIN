@@ -5,10 +5,10 @@
         show: izpiše posamezno novico
         
     TODO:        
-        edit: izpiše vmesnik za urejanje novice
-        update: posodobi novico v bazi
-        delete: izbriše novico iz baze
+       
 */
+require_once 'models/comments.php'; // Add this line
+
 
 class articles_controller
 {
@@ -31,10 +31,11 @@ class articles_controller
         }
         //drugače najdemo oglas in ga prikažemo
         $article = Article::find($_GET['id']);
+        $comments = Comment::find_by_article($article->id); 
         require_once('views/articles/show.php');
     }
 
-    public function store()
+    public function store() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -59,7 +60,7 @@ class articles_controller
         }
     }
 
-    public function list()
+    public function list() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -77,7 +78,7 @@ class articles_controller
         require_once('views/articles/list.php');
     }
 
-    public function edit()
+    public function edit() 
     {
         if (!isset($_SESSION["USER_ID"])) {
             return call('pages', 'error');
@@ -97,7 +98,7 @@ class articles_controller
     }
     
 
-    public function update(){
+    public function update(){ //UREJANJE
 
         if (!isset($_SESSION["USER_ID"]) || !isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['abstract']) || !isset($_POST['content'])) {
             return call('pages', 'error');
@@ -118,11 +119,7 @@ class articles_controller
        }
     }
 
-    public function create(){
-        require_once('views/articles/create.php');
-    }
-
-    public function delete()
+    public function delete() //Izbirs
     {
         if (!isset($_SESSION["USER_ID"]) || !isset($_GET['id'])) {
             return call('pages', 'error');
@@ -139,5 +136,9 @@ class articles_controller
         } else {
             return call('pages', 'error');
         }
+    }
+
+    public function create(){
+        require_once('views/articles/create.php');
     }
 }
