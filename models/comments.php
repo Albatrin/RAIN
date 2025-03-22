@@ -35,7 +35,7 @@ class Comment {
                     $row['id'], 
                     $row['content'], 
                     $row['user_id'], 
-                    $row['username'],  // Corrected argument order
+                    $row['username'],  
                     $row['article_id'], 
                     $row['created_at']
                 );
@@ -48,8 +48,8 @@ class Comment {
     public static function create($content, $user_id, $article_id) {
         $db = Db::getInstance();
         $content = mysqli_real_escape_string($db, $content);
-        $user_id = (int) $user_id;  // Explicitly cast to integer
-        $article_id = (int) $article_id;  // Explicitly cast to integer
+        $user_id = (int) $user_id;  
+        $article_id = (int) $article_id;  
 
         $query = "INSERT INTO comments (content, user_id, article_id) 
                   VALUES ('$content', $user_id, $article_id)";

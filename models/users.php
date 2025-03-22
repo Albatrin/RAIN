@@ -86,4 +86,30 @@ class User
             return false;
         } 
     }
+
+    public static function countArticles($user_id) {
+        $db = Db::getInstance();
+        $user_id = mysqli_real_escape_string($db, $user_id);
+        $query = "SELECT COUNT(*) AS count FROM articles WHERE user_id=$user_id";
+        $result = $db->query($query);
+        $row = $result->fetch_assoc();
+        if (isset($row['count'])) {
+            return $row['count']; 
+        } else {
+            return 0; 
+        }
+    }
+    
+    public static function countComments($user_id) {
+        $db = Db::getInstance();
+        $user_id = mysqli_real_escape_string($db, $user_id);
+        $query = "SELECT COUNT(*) AS count FROM comments WHERE user_id=$user_id";
+        $result = $db->query($query);
+        $row = $result->fetch_assoc();
+        if (isset($row['count'])) {
+            return $row['count']; 
+        } else {
+            return 0; 
+        }
+    }
 }
