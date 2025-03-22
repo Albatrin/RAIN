@@ -40,7 +40,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` text COLLATE utf8mb4_slovenian_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_slovenian_ci;
+-- Data exporting was unselected.
 
+-- Dumping structure for tabela news.comments
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `content` text COLLATE utf8mb4_slovenian_ci NOT NULL,
+  `user_id` int unsigned NOT NULL,
+  `article_id` int unsigned NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fk_comment_user` (`user_id`),
+  KEY `fk_comment_article` (`article_id`),
+  CONSTRAINT `fk_comment_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_comment_article` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_slovenian_ci;
 -- Data exporting was unselected.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

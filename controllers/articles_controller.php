@@ -5,10 +5,10 @@
         show: izpiše posamezno novico
         
     TODO:        
-        edit: izpiše vmesnik za urejanje novice
-        update: posodobi novico v bazi
-        delete: izbriše novico iz baze
+       
 */
+require_once 'models/comments.php'; // Add this line
+
 
 class articles_controller
 {
@@ -31,6 +31,7 @@ class articles_controller
         }
         //drugače najdemo oglas in ga prikažemo
         $article = Article::find($_GET['id']);
+        $comments = Comment::find_by_article($article->id); 
         require_once('views/articles/show.php');
     }
 
@@ -118,10 +119,6 @@ class articles_controller
        }
     }
 
-    public function create(){
-        require_once('views/articles/create.php');
-    }
-
     public function delete()
     {
         if (!isset($_SESSION["USER_ID"]) || !isset($_GET['id'])) {
@@ -139,5 +136,9 @@ class articles_controller
         } else {
             return call('pages', 'error');
         }
+    }
+
+    public function create(){
+        require_once('views/articles/create.php');
     }
 }
