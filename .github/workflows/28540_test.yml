@@ -1,0 +1,80 @@
+name: Testiranje aplikacije
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  preveri-teste:
+    name: Preveri testne skripte
+    runs-on: self-hosted  # Uporabi lokalni runner
+    
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v2
+
+      - name: Preveri prisotnost testov
+        id: preveri-teste
+        run: |
+          TESTNE_DATOTEKE=$(find . -name "test_*.php")
+          echo "Najdene testne datoteke: $TESTNE_DATOTEKE"
+          if [ -z "$TESTNE_DATOTEKE" ]; then
+            echo "NAPAKA: Testne datoteke niso bile najdene!" >&2
+            exit 1
+          else
+            echo "Število najdenih testov: $(echo "$TESTNE_DATOTEKE" | wc -l)"
+            echo "$TESTNE_DATOTEKE" > seznam_testov.txt
+          fi 2> napaka.txt
+
+      - name: Shranjevanje artefaktov
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-artefakti
+          path: |
+            seznam_testov.txt
+            napaka.txt
+
+  izvajanje-testov:
+    name: Izvajanje testov
+    needs: preveri-teste  # Odvisno od prvega posla
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        php-version: [7.4, 8.0, 8.1]  # Preveri na več različicah PHP
+
+    steps:
+      - name: Checkout kode
+        uses: actions/checkout@v2
+
+      - name: Naloži artefakte iz prejšnjega posla
+        uses: actions/download-artifact@v2
+        with:
+          name: test-artefakti
+
+      - name: Preveri napake iz prejšnjega posla
+        run: |
+          if [ -s napaka.txt ]; then
+            echo "Napaka v prejšnjem poslu:"
+            cat napaka.txt
+            exit 1
+          else
+            echo "Prejšnji posel je bil uspešen."
+          fi
+
+      - name: Nastavi PHP različico ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Namesti odvisnosti
+        run: |
+          composer install  # Če uporabljaš Composer za PHP
+
+      - name: Izvedi teste
+        run: |
+          TESTNE_DATOTEKE=$(cat seznam_testov.txt)
+          for test in $TESTNE_DATOTEKE; do
+            php $test  # Tukaj predpostavljamo, da so testi PHP datoteke
+          done
