@@ -28,7 +28,7 @@ jobs:
           fi 2> napaka.txt
 
       - name: Shranjevanje artefaktov
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: test-artefakti
           path: |
@@ -46,10 +46,10 @@ jobs:
 
     steps:
       - name: Checkout kode
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Naloži artefakte iz prejšnjega posla
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: test-artefakti
 
@@ -64,7 +64,7 @@ jobs:
           fi
 
       - name: Nastavi PHP različico ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v4
         with:
           php-version: ${{ matrix.php-version }}
 
