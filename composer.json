@@ -1,0 +1,14 @@
+{
+    "name": "albatrin/rain",
+    "description": "testing",
+    "type": "n",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Albatrin\\Rain\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
