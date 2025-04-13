@@ -16,7 +16,7 @@ class Comment {
         $this->article_id = $article_id;
         $this->created_at = $created_at ?: date('Y-m-d H:i:s'); 
     }
-
+    //izbere
     public static function find_by_article($article_id) {
         $db = Db::getInstance();
         $article_id = mysqli_real_escape_string($db, $article_id);    
